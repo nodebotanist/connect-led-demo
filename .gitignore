@@ -63,3 +63,6 @@ typings/
 # wrangler 
 wrangler.toml
 
+# App stuff
+secrets.js
+
