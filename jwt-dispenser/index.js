@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken")
-const secrets = require('./secrets')
+const jwt = require("jsonwebtoken");
+const secrets = require("./secrets");
 
 addEventListener("fetch", event => {
   event.respondWith(handleRequest(event.request));
