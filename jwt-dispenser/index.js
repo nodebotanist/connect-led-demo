@@ -40,5 +40,6 @@ async function generateToken(request) {
     return new Response("No valid color in payload", { status: 400 });
   }
   let token = jwt.sign(body, secrets.JWT_SECRET_KEY);
+  console.log(token)
   return new Response(token, { status: 200 });
 }

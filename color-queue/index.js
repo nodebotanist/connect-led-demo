@@ -24,7 +24,7 @@ async function handleRequest(request) {
   try {
     let decoded = jwt.verify(userJWT, secrets.JWT_SECRET_KEY)
     // key works, off we go!
-    r.get('.*/', (req) => addColor(decoded))
+    r.post('.*/', (req) => addColor(decoded))
     r.get('.*/get-colors', (req) => getColors(decoded))
   } catch (err) {
     return new Response(err, {status: 403})
@@ -43,7 +43,7 @@ async function addColor(decoded) {
   } else if (decoded.r || decoded.g || decoded.b) {
     colorType = 'RGB'
   } else {
-    return new Response('Invalid color in JWT ', { status: 400 })
+    return new Response('Invalid color in JWT:' + JSON.stringify(decoded), { status: 400 })
   }
   try {
     switch (colorType) {
