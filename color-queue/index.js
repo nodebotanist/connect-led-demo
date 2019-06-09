@@ -72,7 +72,8 @@ async function addColor(decoded) {
 }
 
 async function getColors() {
-  let colors = await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/color-queue`)
-  await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/color-queue/${JSON.stringify([])}`, { method: 'POST'})
-  return new Response(colors, {status: 200})
+  let result
+  await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/myKey`).then((resp) => result = resp.json().then((res) => result = JSON.stringify(res)))
+  await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/myKey/${JSON.stringify([])}`, { method: 'POST'})
+  return new Response(result, {status: 200})
 }
