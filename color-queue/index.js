@@ -20,8 +20,6 @@ async function handleRequest(request) {
   userJWT = userJWT.replace(/^Bearer /, '')
 
   const r = new Router()
-  // r.get('.*/bar', () => new Response('responding for /bar'))
-  // r.get('.*/foo', req => handler(req))
 
   try {
     let decoded = jwt.verify(userJWT, secrets.JWT_SECRET_KEY)
@@ -37,7 +35,6 @@ async function handleRequest(request) {
 }
 
 async function addColor(decoded) {
-  console.log(decoded)
   let userColor, colorType
   if (decoded.color) {
     colorType = 'CSS'
@@ -46,7 +43,6 @@ async function addColor(decoded) {
   } else if (decoded.r || decoded.g || decoded.b) {
     colorType = 'RGB'
   } else {
-    console.log(decoded)
     return new Response('Invalid color in JWT ', { status: 400 })
   }
   try {
@@ -65,7 +61,6 @@ async function addColor(decoded) {
   }
   let colorQueue = await COLOR_QUEUE.get('queue')
   colorQueue = JSON.parse(colorQueue)
-  console.log(colorQueue)
   if(!colorQueue) colorQueue = []
   colorQueue.push(userColor.toString())
   await COLOR_QUEUE.put('queue', JSON.stringify(colorQueue))
