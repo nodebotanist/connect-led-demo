@@ -27,6 +27,7 @@ async function handleRequest(request) {
     let decoded = jwt.verify(userJWT, secrets.JWT_SECRET_KEY)
     // key works, off we go!
     r.get('.*/', (req) => addColor(decoded))
+    r.get('.*/get-colors', (req) => getColors(decoded))
   } catch (err) {
     return new Response(err, {status: 403})
   }
@@ -71,3 +72,8 @@ async function addColor(decoded) {
   return new Response(userColor.toString(), { status: 200 })
 }
 
+async function getColors() {
+  let colors = await COLOR_QUEUE.get('queue')
+  await COLOR_QUEUE.put('queue', '[]')
+  return new Response(colors, {status: 200})
+}
