@@ -62,6 +62,12 @@ async function addColor(decoded) {
   } catch (err) {
     return new Response('Inwalid color: ' + err, { status: 400 })
   }
+  let colorQueue = await COLOR_QUEUE.get('queue')
+  colorQueue = JSON.parse(colorQueue)
+  console.log(colorQueue)
+  if(!colorQueue) colorQueue = []
+  colorQueue.push(userColor.toString())
+  await COLOR_QUEUE.put('queue', JSON.stringify(colorQueue))
   return new Response(userColor.toString(), { status: 200 })
 }
 
