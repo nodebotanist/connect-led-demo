@@ -59,16 +59,20 @@ async function addColor(decoded) {
   } catch (err) {
     return new Response('Inwalid color: ' + err, { status: 400 })
   }
-  let colorQueue = await COLOR_QUEUE.get('queue')
-  colorQueue = JSON.parse(colorQueue)
-  if(!colorQueue) colorQueue = []
-  colorQueue.push(userColor.toString())
-  await COLOR_QUEUE.put('queue', JSON.stringify(colorQueue))
-  return new Response(userColor.toString(), { status: 200 })
+
+  await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/myKey`).then(async function(response) {
+    await response.json().then(async function (resp) {
+      console.log('resp', resp)
+      if(!resp) resp = []
+      resp.push(userColor.rgb())
+      await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/myKey/${JSON.stringify(resp)}`, { method: 'POST'})
+    })
+  })
+  return new Response('Color added', { status: 200 })
 }
 
 async function getColors() {
-  let colors = await COLOR_QUEUE.get('queue')
-  await COLOR_QUEUE.put('queue', '[]')
+  let colors = await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/color-queue`)
+  await fetch(`https://api.keyvalue.xyz/${secrets.KV_KEY}/color-queue/${JSON.stringify([])}`, { method: 'POST'})
   return new Response(colors, {status: 200})
 }
