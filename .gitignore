@@ -66,3 +66,6 @@ wrangler.toml
 # App stuff
 secrets.js
 
+# VS Code
+.vscode
+
