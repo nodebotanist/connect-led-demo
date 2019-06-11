@@ -11,7 +11,7 @@ cargo install wrangler
 or
 
 ```
-npm i -g wrangler
+npm i -g @cloudflare/wrangler
 ```
 
 Create a template using this repo
@@ -54,7 +54,7 @@ THen, to see your color on the Pi
 wrangler publsh
 ```
 
-or 
+or
 
 ```
 wrangler preview
