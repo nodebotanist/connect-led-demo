@@ -1,15 +1,63 @@
-# 👷 `worker-template` Hello World
+# Solution -- Workers Demo
 
-A template for kick starting a Cloudflare worker project.
+## Prerequisites
 
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
-
-#### Wrangler
-To generate using [wrangler](https://github.com/cloudflare/wrangler)
+Install Wrangler:
 
 ```
-wrangler generate myApp https://github.com/cloudflare/worker-template
+cargo install wrangler
 ```
 
-#### Serverless
-To deploy using serverless add a [`serverless.yml`](https://serverless.com/framework/docs/providers/cloudflare/) file.
+or
+
+```
+npm i -g wrangler
+```
+
+Create a template using this repo
+
+```
+wrangler generate color-worker https://github.com/nodebotanist/connect-led-demo
+```
+
+Go into the solution folder
+
+```
+cd color-bot/solution/bot-demo
+```
+
+Create a `wrangler.toml` file in the folder using
+
+```
+wrangler init
+```
+
+(if you don't have a workers.dev subdomain) register for a workers.dev subdomain
+
+```
+wrangler subdomain
+```
+
+Follow the [Configuration and Deploy Steps in the Docs](https://workers.cloudflare.com/docs/quickstart/configuring-and-publishing/)
+
+change the `color` value to any of the following:
+
+```
+color: {r:(0-255), g:(0-255), b:(0-255)}
+color: {h:(0-255), s:(0-255), v:(0-255)}
+color: {color:"(#FFFFFF style color or color name like 'cornflowerblue')}
+```
+
+THen, to see your color on the Pi
+
+```
+wrangler publsh
+```
+
+or 
+
+```
+wrangler preview
+```
+
+if you'd like a little more control.
